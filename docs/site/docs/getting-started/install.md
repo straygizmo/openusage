@@ -42,13 +42,17 @@ brew link janekbaraniewski/tap/openusage
 See the [Homebrew Tap Trust docs](https://docs.brew.sh/Tap-Trust) for details.
 :::
 
-## All platforms — install script
+## macOS & Linux — install script
 
 ```bash
 curl -fsSL https://github.com/janekbaraniewski/openusage/releases/latest/download/install.sh | bash
 ```
 
 The script picks the right binary for your OS/arch and drops it into `/usr/local/bin/openusage` (or another writable directory in your `PATH`).
+
+:::note Windows
+This is a POSIX shell script — it runs on Windows only under WSL or Git Bash. For native Windows (PowerShell / cmd), see [Windows](#windows) below.
+:::
 
 :::tip
 Read the script first if you prefer:
@@ -66,6 +70,28 @@ Available targets:
 - `darwin-amd64`, `darwin-arm64`
 - `linux-amd64`, `linux-arm64`
 - `windows-amd64`
+
+## Windows
+
+Windows is a supported target — CI builds and tests on `windows-latest`, and every release ships a prebuilt `windows-amd64` binary. There is no native install script or package manager (`brew`, scoop, and winget are not used), so install one of these ways:
+
+**Prebuilt binary (recommended)**
+
+1. Download `openusage_<version>_windows_amd64.zip` from the [releases page](https://github.com/janekbaraniewski/openusage/releases). `windows-amd64` is the only prebuilt Windows target — there is no Windows arm64 build.
+2. Extract `openusage.exe` and move it to a directory on your `PATH`.
+3. Confirm it works:
+
+   ```powershell
+   openusage version
+   ```
+
+**From source**
+
+`go install` (see [below](#from-source-go-125)) also works on Windows, but CGO is required, so you must have a C toolchain — install **MinGW-w64** or **MSYS2** and make sure `gcc` is on your `PATH` before running it.
+
+:::note Daemon on Windows
+`openusage telemetry daemon install` sets up a launchd (macOS) or systemd (Linux) service and has no Windows service equivalent. On Windows, run the dashboard in direct mode (just `openusage`) instead.
+:::
 
 ## From source (Go 1.25+)
 
