@@ -34,11 +34,23 @@ Run it side-by-side with your coding agent:
 brew install janekbaraniewski/tap/openusage
 ```
 
-### All platforms (quick install script)
+### macOS / Linux (quick install script)
 
 ```bash
 curl -fsSL https://github.com/janekbaraniewski/openusage/releases/latest/download/install.sh | bash
 ```
+
+This is a POSIX shell script that installs to `/usr/local/bin`. On Windows it only runs under WSL or Git Bash — for native Windows use the section below.
+
+### Windows
+
+There is no native install script or package (`brew`/scoop/winget). Download the pre-built binary from the [Releases](https://github.com/janekbaraniewski/openusage/releases) page:
+
+1. Grab `openusage_<version>_windows_amd64.zip` (Windows amd64 is the only prebuilt Windows target).
+2. Extract `openusage.exe` and put it on your `PATH`.
+3. Run `openusage version` in PowerShell to confirm.
+
+Alternatively, `go install` from source (see below) works on Windows once a MinGW/MSYS2 C toolchain is on your `PATH` (CGO is required). Note: the telemetry daemon's service install (`openusage telemetry daemon install`) supports launchd/systemd only — on Windows run the dashboard in direct mode.
 
 ### From source (Go 1.25+)
 
